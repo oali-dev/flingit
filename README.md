@@ -1,1 +1,2 @@
 # flingit
+Repository for flingit
