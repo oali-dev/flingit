@@ -33,7 +33,9 @@ public class GameManager : MonoBehaviour
 
         Vector2[] edgeColliderPoints = new[] { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
         List<Vector2> pointList = new List<Vector2>(edgeColliderPoints);
-        camera.gameObject.AddComponent<EdgeCollider2D>().SetPoints(pointList);
+        EdgeCollider2D edgeCollider = camera.gameObject.GetComponent<EdgeCollider2D>();
+        edgeCollider.SetPoints(pointList);
+        edgeCollider.enabled = true;
     }
 
     private void Update()
