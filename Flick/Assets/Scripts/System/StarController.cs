@@ -38,11 +38,18 @@ public class StarController : MonoBehaviour
         _rigidBody.angularVelocity = RotationSpeed;
     }
 
-    public void DrawTrajectoryPreviewLine(Vector2 collisionPoint)
+    public void ShowTrajectoryPreviewLine()
     {
-        _lineRenderer.SetPosition(0, transform.position);
-        _lineRenderer.SetPosition(1, collisionPoint);
         _lineRenderer.gameObject.SetActive(true);
+    }
+
+    public void UpdateTrajectoryPreviewLineVertices(Vector2 collisionPoint)
+    {
+        Vector2 directionNormalized = (collisionPoint - (Vector2)transform.position).normalized;
+
+        _lineRenderer.SetPosition(1, (Vector2)transform.position + directionNormalized * 0.5f);
+        _lineRenderer.SetPosition(0, collisionPoint + directionNormalized * 1f);
+        _lineRenderer.material.SetTextureOffset("_MainTex", Vector2.right * Time.time * 2f);
     }
 
     public void HideTrajectoryPreviewLine()
@@ -61,13 +68,11 @@ public class StarController : MonoBehaviour
         lineObject.SetActive(false);
 
         LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 0f);
-        lineRenderer.endColor = new Color(1.0f, 0f, 0f, 0.75f);
-        lineRenderer.startWidth = 0.2f;
-        lineRenderer.endWidth = 0.4f;
+        lineRenderer.material = Resources.Load<Material>("TrajectoryMaterial");
+        lineRenderer.textureMode = LineTextureMode.Tile;
+        lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 0.05f);
+        lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         lineRenderer.positionCount = 2;
-        lineRenderer.numCapVertices = 4;
 
         return lineRenderer;
     }

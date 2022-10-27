@@ -32,12 +32,17 @@ public class DragTouchProcessor : TouchProcessor
             if(hit.collider != null)
             {
                 Vector2 collisionPoint = hit.point;
-                _starController.DrawTrajectoryPreviewLine(collisionPoint);
+                _starController.UpdateTrajectoryPreviewLineVertices(collisionPoint);
             }
             else
             {
                 Debug.LogError("Star trajectory raycast did not hit any anything");
-            }    
+            }
+
+            if(!_starController.IsTrajectoryPreviewBeingDrawn())
+            {
+                _starController.ShowTrajectoryPreviewLine();
+            }
         }
         else
         {
