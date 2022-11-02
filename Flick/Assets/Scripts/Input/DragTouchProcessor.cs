@@ -28,7 +28,7 @@ public class DragTouchProcessor : TouchProcessor
         if(dragDistance > ReleaseDistance)
         {
             Vector2 launchDirection = GetLaunchDirection(touchInfo);
-            RaycastHit2D hit = Physics2D.Raycast(_starController.transform.position, launchDirection, Mathf.Infinity, _collidableLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(_starPosition, launchDirection, Mathf.Infinity, _collidableLayerMask);
             if(hit.collider != null)
             {
                 Vector2 collisionPoint = hit.point;
@@ -79,6 +79,6 @@ public class DragTouchProcessor : TouchProcessor
 
     private Vector2 GetLaunchDirection(InputManager.TouchInfo touchInfo)
     {
-        return (_starPosition - touchInfo.worldPosition);
+        return _starPosition - touchInfo.worldPosition;
     }
 }

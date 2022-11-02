@@ -74,6 +74,7 @@ public class InputManager
         {
             Touch touch = Input.GetTouch(0);
             TouchPhase phase = touch.phase;
+            // TODO: Why is this not using mouse position from touch? Don't think this code works also touch position never declared anywhere
             Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if(phase == TouchPhase.Began)

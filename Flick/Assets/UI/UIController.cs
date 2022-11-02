@@ -15,6 +15,6 @@ public class UIController : MonoBehaviour
         startButton = root.Q<Button>("start-button");
         settingsButton = root.Q<Button>("settings-button");
 
-        startButton.clicked += () => SceneManager.LoadScene("TestScene");
+        startButton.clicked += () => SceneManager.LoadScene("TestScene2");
     }
 }

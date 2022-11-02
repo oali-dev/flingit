@@ -10,8 +10,8 @@ public class StarController : MonoBehaviour
     private Rigidbody2D _rigidBody = null;
     private LineRenderer _lineRenderer = null;
 
-    private const float ForceToAdd = 500.0f;
-    private const float RotationSpeed = -500.0f;
+    private const float ForceToAdd = 900.0f;
+    private const float RotationSpeed = -1000.0f;
 
     private void Awake()
     {
@@ -47,9 +47,9 @@ public class StarController : MonoBehaviour
     {
         Vector2 directionNormalized = (collisionPoint - (Vector2)transform.position).normalized;
 
-        _lineRenderer.SetPosition(1, (Vector2)transform.position + directionNormalized * 0.5f);
-        _lineRenderer.SetPosition(0, collisionPoint + directionNormalized * 1f);
-        _lineRenderer.material.SetTextureOffset("_MainTex", Vector2.right * Time.time * 2f);
+        _lineRenderer.SetPosition(0, (Vector2)transform.position + directionNormalized * 0.5f);
+        _lineRenderer.SetPosition(1, collisionPoint + directionNormalized * 0.5f);
+        _lineRenderer.material.SetTextureOffset("_MainTex", Vector2.left * Time.time * 2f);
     }
 
     public void HideTrajectoryPreviewLine()
@@ -70,8 +70,8 @@ public class StarController : MonoBehaviour
         LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
         lineRenderer.material = Resources.Load<Material>("TrajectoryMaterial");
         lineRenderer.textureMode = LineTextureMode.Tile;
-        lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 0.05f);
-        lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 0.05f);
+        lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         lineRenderer.positionCount = 2;
 
         return lineRenderer;
