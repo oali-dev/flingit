@@ -98,7 +98,7 @@ public class InputManager
 #if UNITY_WEBGL || UNITY_EDITOR
     private TouchInfo GetDesktopTouchInfo()
     {
-        // Pass the main camera to InputManager and save it as a member variable
+        // TODO: Pass the main camera to InputManager and save it as a member variable
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if(Input.GetMouseButtonDown(0))
