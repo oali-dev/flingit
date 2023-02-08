@@ -9,6 +9,7 @@ public class StarController : MonoBehaviour
     private Transform _transform = null;
     private Rigidbody2D _rigidBody = null;
     private LineRenderer _lineRenderer = null;
+    private Vector2 _collisionPoint = Vector2.zero;
 
     private const float ForceToAdd = 900.0f;
     private const float RotationSpeed = -1000.0f;
@@ -45,6 +46,7 @@ public class StarController : MonoBehaviour
 
     public void UpdateTrajectoryPreviewLineVertices(Vector2 collisionPoint)
     {
+        _collisionPoint = collisionPoint;
         Vector2 directionNormalized = (collisionPoint - (Vector2)transform.position).normalized;
 
         _lineRenderer.SetPosition(0, (Vector2)transform.position + directionNormalized * 0.5f);
@@ -75,5 +77,10 @@ public class StarController : MonoBehaviour
         lineRenderer.positionCount = 2;
 
         return lineRenderer;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere((Vector3)_collisionPoint, 1.0f);
     }
 }
