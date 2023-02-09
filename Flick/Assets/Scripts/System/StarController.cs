@@ -66,6 +66,7 @@ public class StarController : MonoBehaviour
 
     private LineRenderer CreateLineRenderer()
     {
+        // TODO: Might make more sense to just make a line renderer prefab?
         GameObject lineObject = new GameObject("Trajectory Preview");
         lineObject.SetActive(false);
 
