@@ -8,8 +8,10 @@ public class StarController : MonoBehaviour
 
     private Transform _transform = null;
     private Rigidbody2D _rigidBody = null;
-    private LineRenderer _lineRenderer = null;
     private Vector2 _collisionPoint = Vector2.zero;
+
+    [SerializeField]
+    private LineRenderer _lineRenderer = null;
 
     private const float ForceToAdd = 700.0f;
 
@@ -17,7 +19,10 @@ public class StarController : MonoBehaviour
     {
         _transform = this.transform;
         _rigidBody = GetComponent<Rigidbody2D>();
-        _lineRenderer = CreateLineRenderer();
+        if(_lineRenderer == null)
+        {
+            Debug.LogError("Trajectory preview line renderer not assigned.");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -59,21 +64,5 @@ public class StarController : MonoBehaviour
     public bool IsTrajectoryPreviewBeingDrawn()
     {
         return _lineRenderer.gameObject.activeSelf;
-    }
-
-    private LineRenderer CreateLineRenderer()
-    {
-        // TODO: Might make more sense to just make a line renderer prefab?
-        GameObject lineObject = new GameObject("Trajectory Preview");
-        lineObject.SetActive(false);
-
-        LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
-        lineRenderer.material = Resources.Load<Material>("TrajectoryMaterial");
-        lineRenderer.textureMode = LineTextureMode.Tile;
-        lineRenderer.endColor = new Color(1.0f, 1.0f, 1.0f, 0.05f);
-        lineRenderer.startColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        lineRenderer.positionCount = 2;
-
-        return lineRenderer;
     }
 }
