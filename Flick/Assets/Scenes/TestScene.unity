@@ -23895,6 +23895,14 @@ PrefabInstance:
       propertyPath: m_AssetsPPU
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 6928910243260346912, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
+      propertyPath: m_StretchFill
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928910243260346914, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
+      propertyPath: m_ForceIntoRT
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6928910243260346914, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
       propertyPath: orthographic size
       value: 11.25
