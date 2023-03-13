@@ -242,31 +242,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2779505048971573876, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
   m_PrefabInstance: {fileID: 1846089305}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &564221519 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6928910244192794552, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
+--- !u!68 &1042594289 stripped
+EdgeCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6928910243260346919, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
   m_PrefabInstance: {fileID: 1846089305}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &564221525
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564221519}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cc545847a3656b748a94a8ed126eeca5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1178920523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2527,6 +2507,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6928910242467340932, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
+      propertyPath: _cameraEdgeCollider
+      value: 
+      objectReference: {fileID: 1042594289}
     - target: {fileID: 6928910242850895763, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 1
@@ -23891,30 +23875,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6928910243260346912, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
-      propertyPath: m_AssetsPPU
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 6928910243260346912, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
-      propertyPath: m_StretchFill
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6928910243260346914, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
       propertyPath: m_ForceIntoRT
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6928910243260346914, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
       propertyPath: orthographic size
-      value: 11.25
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6928910244192794557, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6928910244192794559, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4d441f59ff254dc4983652442f6ccca7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
 --- !u!1001 &2027931217

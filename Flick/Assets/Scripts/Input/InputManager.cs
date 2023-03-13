@@ -26,22 +26,17 @@ public class InputManager
         }
     }
 
-    /// <summary>
-    /// The currently active touch processor.
-    /// </summary>
     private TouchProcessor _touchProcessor = null;
-
     private StarController _starController = null;
+    private Camera _camera = null;
 
-    /// <summary>
-    /// Layer mask of all physics objects that are tappable, which currently is only the star.
-    /// </summary>
     private readonly int _tappableLayerMask = LayerMask.GetMask("Tappable");
 
-    public InputManager(StarController starController)
+    public InputManager(StarController starController, Camera camera)
     {
         _touchProcessor = new IdleTouchProcessor(starController);
         _starController = starController;
+        _camera = camera;
     }
 
     public void ProcessInput()
@@ -75,7 +70,7 @@ public class InputManager
             Touch touch = Input.GetTouch(0);
             TouchPhase phase = touch.phase;
             // TODO: Why is this not using mouse position from touch? Don't think this code works also touch position never declared anywhere
-            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 worldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
             if(phase == TouchPhase.Began)
             {
@@ -98,8 +93,7 @@ public class InputManager
 #if UNITY_WEBGL || UNITY_EDITOR
     private TouchInfo GetDesktopTouchInfo()
     {
-        // TODO: Pass the main camera to InputManager and save it as a member variable
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 worldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
         if(Input.GetMouseButtonDown(0))
         {
