@@ -6,24 +6,20 @@ public class StarController : MonoBehaviour
 {
     public Transform Transform { get { return _transform; } }
 
+    [SerializeField]
     private Transform _transform = null;
+    [SerializeField]
     private Rigidbody2D _rigidBody = null;
-    private Vector2 _collisionPoint = Vector2.zero;
-
+    [SerializeField]
+    private Animator _animator = null;
     [SerializeField]
     private LineRenderer _lineRenderer = null;
 
-    private const float ForceToAdd = 700.0f;
+    private Vector2 _collisionPoint = Vector2.zero;
 
-    private void Awake()
-    {
-        _transform = this.transform;
-        _rigidBody = GetComponent<Rigidbody2D>();
-        if(_lineRenderer == null)
-        {
-            Debug.LogError("Trajectory preview line renderer not assigned.");
-        }
-    }
+    private const float ForceToAdd = 700.0f;
+    private const string TrajectoryPreviewTexture = "_MainTex";
+    private static readonly int IsReleased = Animator.StringToHash("IsReleased");
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -40,6 +36,7 @@ public class StarController : MonoBehaviour
     {
         direction.Normalize();
         _rigidBody.AddForce(direction * ForceToAdd);
+        _animator.SetBool(IsReleased, true);
     }
 
     public void ShowTrajectoryPreviewLine()
@@ -53,7 +50,7 @@ public class StarController : MonoBehaviour
 
         _lineRenderer.SetPosition(0, (Vector2)transform.position + directionNormalized * 0.5f);
         _lineRenderer.SetPosition(1, collisionPoint + directionNormalized * 0.5f);
-        _lineRenderer.material.SetTextureOffset("_MainTex", Vector2.left * Time.time * 2f);
+        _lineRenderer.material.SetTextureOffset(TrajectoryPreviewTexture, Vector2.left * Time.time * 2f);
     }
 
     public void HideTrajectoryPreviewLine()

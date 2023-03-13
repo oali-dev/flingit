@@ -5,13 +5,8 @@ public class DragTouchProcessor : TouchProcessor
     private StarController _starController;
     private readonly Vector2 _starPosition;
 
-    /// <summary>
-    /// Layer mask of all objects that the star can collide with.
-    /// Used in drawing the star trajectory preview by raycasting in the opposite direction of the drag vector.
-    /// </summary>
     private readonly int _collidableLayerMask = LayerMask.GetMask("Collidable");
-
-    private const float ReleaseDistance = 0.5f;
+    private const float ReleaseDistance = 1.5f;
 
     public DragTouchProcessor(StarController starController)
     {
