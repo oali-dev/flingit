@@ -10,7 +10,10 @@ public class IdleTouchProcessor : TouchProcessor
         _starController = starController;
     }
 
-    public override void Start(InputManager.TouchInfo touchInfo) {}
+    public override void Start(InputManager.TouchInfo touchInfo)
+    {
+        _starController.StartReturningChildToOrigin();
+    }
 
     public override void Update(InputManager.TouchInfo touchInfo) {}
 

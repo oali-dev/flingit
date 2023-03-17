@@ -9,15 +9,20 @@ public class StarController : MonoBehaviour
     [SerializeField]
     private Transform _transform = null;
     [SerializeField]
+    private Transform _childTransform = null;
+    [SerializeField]
     private Rigidbody2D _rigidBody = null;
     [SerializeField]
     private Animator _animator = null;
     [SerializeField]
     private LineRenderer _lineRenderer = null;
+    [SerializeField]
+    private GameObject _rippleEffect = null;
 
-    private Vector2 _collisionPoint = Vector2.zero;
+    private Coroutine ResetChildPositionCoroutine = null;
 
     private const float ForceToAdd = 700.0f;
+    private const float TimeToReturnToOrigin = 0.1f;
     private const string TrajectoryPreviewTexture = "_MainTex";
     private static readonly int IsReleased = Animator.StringToHash("IsReleased");
 
@@ -37,11 +42,37 @@ public class StarController : MonoBehaviour
         direction.Normalize();
         _rigidBody.AddForce(direction * ForceToAdd);
         _animator.SetBool(IsReleased, true);
+        _rippleEffect.SetActive(false);
+        StartReturningChildToOrigin();
+    }
+
+    public void MoveChild(Vector2 position)
+    {
+        _childTransform.position = position;
+    }
+
+    public void StartReturningChildToOrigin()
+    {
+        ResetChildPositionCoroutine = CoroutineManager.Instance.StartCoroutine(ResetChildPositionOverTime());
+    }
+
+    public void StopReturningChildToOrigin()
+    {
+        if(ResetChildPositionCoroutine is null)
+        {
+            return;
+        }
+        CoroutineManager.Instance.StopCoroutine(ResetChildPositionCoroutine);
     }
 
     public void ShowTrajectoryPreviewLine()
     {
         _lineRenderer.gameObject.SetActive(true);
+    }
+
+    public void HideTrajectoryPreviewLine()
+    {
+        _lineRenderer.gameObject.SetActive(false);
     }
 
     public void UpdateTrajectoryPreviewLineVertices(Vector2 collisionPoint)
@@ -53,13 +84,20 @@ public class StarController : MonoBehaviour
         _lineRenderer.material.SetTextureOffset(TrajectoryPreviewTexture, Vector2.left * Time.time * 2f);
     }
 
-    public void HideTrajectoryPreviewLine()
-    {
-        _lineRenderer.gameObject.SetActive(false);
-    }
-
     public bool IsTrajectoryPreviewBeingDrawn()
     {
         return _lineRenderer.gameObject.activeSelf;
+    }
+
+    private IEnumerator ResetChildPositionOverTime()
+    {
+        Vector2 velocity = Vector2.zero;
+        while(!(_childTransform.localPosition == Vector3.zero))
+        {
+            _childTransform.localPosition = Vector2.SmoothDamp(_childTransform.localPosition, Vector2.zero, ref velocity, TimeToReturnToOrigin);
+            yield return null;
+        }
+
+        _childTransform.localPosition = Vector3.zero;
     }
 }

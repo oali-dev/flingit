@@ -5,8 +5,8 @@ public class DragTouchProcessor : TouchProcessor
     private StarController _starController;
     private readonly Vector2 _starPosition;
 
-    private readonly int _collidableLayerMask = LayerMask.GetMask("Collidable");
     private const float ReleaseDistance = 1.5f;
+    private static readonly int CollidableLayerMask = LayerMask.GetMask("Collidable");
 
     public DragTouchProcessor(StarController starController)
     {
@@ -15,15 +15,18 @@ public class DragTouchProcessor : TouchProcessor
         _starPosition = starController.Transform.position;
     }
 
-    public override void Start(InputManager.TouchInfo touchInfo) {}
+    public override void Start(InputManager.TouchInfo touchInfo)
+    {
+        _starController.StopReturningChildToOrigin();
+    }
 
     public override void Update(InputManager.TouchInfo touchInfo)
     {
+        Vector2 launchDirection = GetLaunchDirection(touchInfo);
         float dragDistance = GetDragDistance(touchInfo);
         if(dragDistance > ReleaseDistance)
         {
-            Vector2 launchDirection = GetLaunchDirection(touchInfo);
-            RaycastHit2D hit = Physics2D.Raycast(_starPosition, launchDirection, Mathf.Infinity, _collidableLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(_starPosition, launchDirection, Mathf.Infinity, CollidableLayerMask);
             if(hit.collider != null)
             {
                 Vector2 collisionPoint = hit.point;
@@ -46,6 +49,9 @@ public class DragTouchProcessor : TouchProcessor
                 _starController.HideTrajectoryPreviewLine();
             }    
         }
+
+        Vector2 touchWorldPositionClamped = Vector2.ClampMagnitude(-launchDirection, ReleaseDistance);
+        _starController.MoveChild(touchWorldPositionClamped);
     }
 
     public override bool HasEnded(InputManager.TouchInfo touchInfo)
