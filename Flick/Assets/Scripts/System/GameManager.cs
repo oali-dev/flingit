@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,14 +11,43 @@ public class GameManager : MonoBehaviour
     private StarController _starController;
     [SerializeField]
     private Camera _camera;
+    [SerializeField]
+    private TextMeshProUGUI _hitsRemainingText;
+    [SerializeField]
+    private ButtonController _retryButton;
+    [SerializeField]
+    private ButtonController _nextLevelButton;
 
     private InputManager _inputManager = null;
     private LevelInstance _levelInstance = null;
+
+    private enum GameEndResult
+    {
+        WON,
+        LOST
+    }
 
     private void Awake()
     {
         _inputManager = new InputManager(_starController, _camera);
         _levelInstance = new LevelInstance(_levelData);
+
+        _starController.HookUpCollisionCallbacks(
+            () => {
+                bool isGameLost =_levelInstance.DecrementHitsAllowed();
+                _hitsRemainingText.SetText(_levelInstance._numberOfHitsAllowed.ToString());
+                CheckIfGameHasEnded(isGameLost, GameEndResult.LOST);
+            }, 
+            () => {
+                bool isGameWon =_levelInstance.DecrementOrbsRequired();
+                CheckIfGameHasEnded(isGameWon, GameEndResult.WON);
+            }
+        );
+        _starController._numberOfForceFieldsAllowed = _levelData.numberOfForceFieldsAllowed;
+
+        _hitsRemainingText.SetText(_levelData.numberOfHitsAllowed.ToString());
+        _retryButton.SetCurrentLevel(_levelData.level);
+        _nextLevelButton.SetCurrentLevel(_levelData.level);
     }
 
     private IEnumerator Start()
@@ -46,5 +76,21 @@ public class GameManager : MonoBehaviour
         EdgeCollider2D edgeCollider = _camera.gameObject.GetComponent<EdgeCollider2D>();
         edgeCollider.SetPoints(pointList);
         edgeCollider.enabled = true;
+    }
+
+    private void CheckIfGameHasEnded(bool isGameOver, GameEndResult gameEndResult)
+    {
+        if(isGameOver) {
+            _starController.DestroyStar();
+
+            if(gameEndResult == GameEndResult.WON)
+            {
+                _nextLevelButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                _retryButton.gameObject.SetActive(true);
+            }
+        }
     }
 }

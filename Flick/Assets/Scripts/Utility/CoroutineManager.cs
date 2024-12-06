@@ -15,6 +15,7 @@ public class CoroutineManager : MonoBehaviour, ICoroutineManager
             if(_instance == null)
             {
                 GameObject coroutineManagerObject = new GameObject("Coroutine Manager");
+                DontDestroyOnLoad(coroutineManagerObject);
                 _instance = coroutineManagerObject.AddComponent<CoroutineManager>();
             }
 

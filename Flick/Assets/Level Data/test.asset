@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9d6a49f84eaea4cb3daa829d6e698c, type: 3}
   m_Name: test
   m_EditorClassIdentifier: 
+  level: 1
   numberOfHitsAllowed: 4
   orbsRequiredToPassLevel: 4

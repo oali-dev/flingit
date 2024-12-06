@@ -18,6 +18,7 @@ public class TapTouchProcessor : TouchProcessor
 
     public override TouchProcessor End(InputManager.TouchInfo touchInfo)
     {
+        _starController.PlaceForceField(touchInfo.worldPosition);
         return new IdleTouchProcessor(_starController);
     }
 }
