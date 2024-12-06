@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class LevelInstance
 {
-    private int _numberOfHitsAllowed;
-    private int _orbsRequiredToPassLevel;
+    public int _numberOfHitsAllowed { get; private set; }
+    public int _orbsRequiredToPassLevel { get; private set; }
 
     public LevelInstance(LevelData levelData)
     {
@@ -19,11 +19,11 @@ public class LevelInstance
     /// <summary>
     /// Decrements the number of allowed hits after a collision with an obstacle.
     /// </summary>
-    /// <param name="amount">How much to decrement by</param>
     /// <returns>True if we exceeded the number of hits allowed and the game is over.</returns>
-    public bool DecrementHitsAllowed(int amount = 1)
+    public bool DecrementHitsAllowed()
     {
-        _numberOfHitsAllowed -= amount;
+        DebugLogger.Log("Hit Wall");
+        _numberOfHitsAllowed -= 1;
         return (_numberOfHitsAllowed < 0);
     }
 
@@ -33,6 +33,7 @@ public class LevelInstance
     /// <returns>True if we collected the required number of orbs and passed the level.</returns>
     public bool DecrementOrbsRequired()
     {
+        DebugLogger.Log("Hit Point");
         _orbsRequiredToPassLevel--;
         return (_orbsRequiredToPassLevel == 0);
     }
