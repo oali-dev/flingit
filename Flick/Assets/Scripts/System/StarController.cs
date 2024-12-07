@@ -68,16 +68,12 @@ public class StarController : MonoBehaviour
 
     public void LaunchStar(Vector2 direction)
     {
-        // Set the root position to where the child is visually,
-        // then reset the child position to the origin again so we can prepare to launch the star
-        _transform.position = _childTransform.position;
-        _childTransform.localPosition = Vector3.zero;
-
         direction.Normalize();
         _rigidBody.AddForce(direction * ForceToAdd);
         _animator.SetBool(IsReleased, true);
         _rippleEffect.SetActive(false);
         _trailRenderer.SetActive(true);
+        StartReturningChildToOrigin();
     }
 
     public void MoveChild(Vector2 position)
