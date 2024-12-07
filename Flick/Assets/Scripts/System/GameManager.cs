@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private ButtonController _retryButton;
     [SerializeField]
     private ButtonController _nextLevelButton;
+    [SerializeField]
+    private CameraShake _cameraShakeScript;
 
     private InputManager _inputManager = null;
     private LevelInstance _levelInstance = null;
@@ -35,6 +37,18 @@ public class GameManager : MonoBehaviour
         _starController.HookUpCollisionCallbacks(
             () => {
                 bool isGameLost =_levelInstance.DecrementHitsAllowed();
+
+                // Shake the camera whenever the ball collides with the wall
+                // If the collision caused the level to fail then play an even stronger camera shake
+                if(isGameLost)
+                {
+                    _cameraShakeScript.ShakeCamera(CameraShake.ShakeStrength.STRONG);
+                }
+                else
+                {
+                    _cameraShakeScript.ShakeCamera(CameraShake.ShakeStrength.WEAK);
+                }
+
                 _hitsRemainingText.SetText(_levelInstance._numberOfHitsAllowed.ToString());
                 CheckIfGameHasEnded(isGameLost, GameEndResult.LOST);
             }, 

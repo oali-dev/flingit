@@ -4101,6 +4101,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6928910242467340932, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
+      propertyPath: _levelData
+      value: 
+      objectReference: {fileID: 11400000, guid: 126bac3659fdd4c48b2cfc6871b6da20, type: 2}
     - target: {fileID: 6928910242850895763, guid: 7d8c7ca9196ed9f449461cad54cf20dc, type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.size
       value: 2
