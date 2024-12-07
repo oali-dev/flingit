@@ -5,8 +5,8 @@ public class DragTouchProcessor : TouchProcessor
     private StarController _starController;
     private readonly Vector2 _starPosition;
 
-    private const float MaxDragDistance = 1.0f;
-    private const float DragDistanceToShowTrajectory = 0.4f;
+    private const float MaxDragDistance = 0.3f;
+    private const float DragDistanceToShowTrajectory = 0.3f;
     private static readonly int CollidableLayerMask = LayerMask.GetMask("Collidable");
 
     public DragTouchProcessor(StarController starController)
@@ -27,20 +27,6 @@ public class DragTouchProcessor : TouchProcessor
         float dragDistance = GetDragDistance(touchInfo);
 
         // If the amount dragged is past the threshhold for showing the trajectory preview line
-        if(dragDistance > DragDistanceToShowTrajectory)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(_starPosition, launchDirection, Mathf.Infinity, CollidableLayerMask);
-            if(hit.collider != null)
-            {
-                Vector2 collisionPoint = hit.point;
-                _starController.UpdateTrajectoryPreviewLineVertices(collisionPoint);
-            }
-            else
-            {
-                Debug.LogError("Star trajectory raycast did not hit any anything");
-            }
-        }
-
         if(dragDistance > DragDistanceToShowTrajectory)
         {
             RaycastHit2D hit = Physics2D.Raycast(_starPosition, launchDirection, Mathf.Infinity, CollidableLayerMask);

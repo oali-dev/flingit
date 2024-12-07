@@ -14,9 +14,9 @@ public class CameraShake : MonoBehaviour
 
     private float _timer = 0f;
 
-    private const float WeakShakeIntensity = 0.5f;
+    private const float WeakShakeIntensity = 0.75f;
     private const float StrongShakeIntensity = 2.5f;
-    private const float WeakShakeTime = 0.1f;
+    private const float WeakShakeTime = 0.15f;
     private const float StrongShakeTime = 0.4f;
 
     public void ShakeCamera(ShakeStrength shakeStrength)
