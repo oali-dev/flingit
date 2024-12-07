@@ -20,6 +20,8 @@ public class StarController : MonoBehaviour
     private GameObject _rippleEffect = null;
     [SerializeField]
     private GameObject _forceField = null;
+    [SerializeField]
+    private GameObject _trailRenderer = null;
 
     private Coroutine ResetChildPositionCoroutine = null;
     public int _numberOfForceFieldsAllowed { private get; set; }
@@ -53,6 +55,7 @@ public class StarController : MonoBehaviour
                 _rippleEffect.transform.position = _transform.position;
                 _rippleEffect.SetActive(true);
                 _forceField.SetActive(false);
+                _trailRenderer.SetActive(false);
 
                 _numberOfForceFieldsAllowed--;
             }
@@ -74,7 +77,7 @@ public class StarController : MonoBehaviour
         _rigidBody.AddForce(direction * ForceToAdd);
         _animator.SetBool(IsReleased, true);
         _rippleEffect.SetActive(false);
-        //StartReturningChildToOrigin();
+        _trailRenderer.SetActive(true);
     }
 
     public void MoveChild(Vector2 position)
