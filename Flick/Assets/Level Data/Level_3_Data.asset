@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 3
   numberOfHitsAllowed: 2
-  orbsRequiredToPassLevel: 3
+  orbsRequiredToPassLevel: 2
   numberOfForceFieldsAllowed: 0

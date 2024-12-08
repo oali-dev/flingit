@@ -22,6 +22,12 @@ public class StarController : MonoBehaviour
     private GameObject _forceField = null;
     [SerializeField]
     private GameObject _trailRenderer = null;
+    [SerializeField]
+    private GameObject _pointPickupEffectPrefab = null;
+    [SerializeField]
+    private GameObject _wallHitEffectPrefab = null;
+    [SerializeField]
+    private GameObject _forceFieldCollideEffectPrefab = null;
 
     private Coroutine ResetChildPositionCoroutine = null;
     public int _numberOfForceFieldsAllowed { private get; set; }
@@ -41,6 +47,7 @@ public class StarController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _onHitWall();
+        GameObject.Instantiate(_wallHitEffectPrefab, collision.contacts[0].point, Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,6 +58,14 @@ public class StarController : MonoBehaviour
             {
                 _OnHitForceField();
                 _rigidBody.linearVelocity = Vector2.zero;
+
+                // Use GetContacts to get contact info since we don't have collision info in OnTriggerEnter
+                Vector3 forceFieldCenter = collision.transform.position;
+                Vector3 ballCenter = _transform.position;
+                Vector3 midPoint = (forceFieldCenter + ballCenter) / 2;
+                float angle = Mathf.Atan2(forceFieldCenter.y - ballCenter.y, forceFieldCenter.x - ballCenter.x) * Mathf.Rad2Deg - 90f;
+                DebugLogger.Log("Angle = " + angle);
+                GameObject.Instantiate(_forceFieldCollideEffectPrefab, midPoint, Quaternion.Euler(0f, 0f, angle));
 
                 _rippleEffect.transform.position = _transform.position;
                 _rippleEffect.SetActive(true);
@@ -63,6 +78,7 @@ public class StarController : MonoBehaviour
         }
 
         _onCollectPoint();
+        GameObject.Instantiate(_pointPickupEffectPrefab, collision.transform.position, Quaternion.identity);
         collision.gameObject.SetActive(false);
     }
 
