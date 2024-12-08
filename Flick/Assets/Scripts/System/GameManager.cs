@@ -19,9 +19,15 @@ public class GameManager : MonoBehaviour
     private ButtonController _nextLevelButton;
     [SerializeField]
     private CameraShake _cameraShakeScript;
+    [SerializeField]
+    private GameObject _ballDestroyEffectPrefab;
+    [SerializeField]
+    private GameObject _fireworksEffectPrefab;
 
     private InputManager _inputManager = null;
     private LevelInstance _levelInstance = null;
+
+    private const float TimeBetweenEachFirework = 0.4f;
 
     private enum GameEndResult
     {
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour
                 if(isGameLost)
                 {
                     _cameraShakeScript.ShakeCamera(CameraShake.ShakeStrength.STRONG);
+                    GameObject.Instantiate(_ballDestroyEffectPrefab, _starController.transform.position, Quaternion.identity);
                 }
                 else
                 {
@@ -99,12 +106,30 @@ public class GameManager : MonoBehaviour
 
             if(gameEndResult == GameEndResult.WON)
             {
-                _nextLevelButton.gameObject.SetActive(true);
+                CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
             }
             else
             {
                 _retryButton.gameObject.SetActive(true);
             }
         }
+    }
+
+    private IEnumerator PlayGameWonSequence()
+    {
+        // Yield for tempo reasons
+        yield return new WaitForSeconds(TimeBetweenEachFirework);
+
+        // Play Fireworks at 5 random spots on the screen
+        for(int i = 0; i < 5; i++)
+        {
+            float x = Random.Range(0.2f, 0.8f);
+            float y = Random.Range(0.2f, 0.8f);
+            Vector3 worldPoint = _camera.ViewportToWorldPoint(new Vector3(x, y, _camera.nearClipPlane));
+            GameObject.Instantiate(_fireworksEffectPrefab, worldPoint, Quaternion.identity);
+            yield return new WaitForSeconds(TimeBetweenEachFirework);
+        }
+
+        _nextLevelButton.gameObject.SetActive(true);
     }
 }

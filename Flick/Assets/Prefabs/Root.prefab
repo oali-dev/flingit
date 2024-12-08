@@ -11216,6 +11216,8 @@ MonoBehaviour:
   _retryButton: {fileID: 3129765128221410827}
   _nextLevelButton: {fileID: 1726384913445211972}
   _cameraShakeScript: {fileID: 1351000586503771243}
+  _ballDestroyEffectPrefab: {fileID: 9056984685533023342, guid: db20bb0d577521e4fbc3225a8dd1afb2, type: 3}
+  _fireworksEffectPrefab: {fileID: 9056984685533023342, guid: d722a4bb10b3a8a44bcdb39ca60ce829, type: 3}
 --- !u!114 &6928910242467340933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11626,6 +11628,9 @@ MonoBehaviour:
   _rippleEffect: {fileID: 3271625078465370775}
   _forceField: {fileID: 7185115665130939472}
   _trailRenderer: {fileID: 3975520728562134263}
+  _pointPickupEffectPrefab: {fileID: 6255354856166356740, guid: 82c5020475a3417438d3906d8defe94e, type: 3}
+  _wallHitEffectPrefab: {fileID: 6255354856166356740, guid: c711d632f80e6594b8f6d33272869932, type: 3}
+  _forceFieldCollideEffectPrefab: {fileID: 6255354856166356740, guid: e5533a89d5c8ce64580ed81a9a0006d6, type: 3}
 --- !u!95 &6473273484573783080
 Animator:
   serializedVersion: 7
