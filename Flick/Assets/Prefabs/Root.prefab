@@ -5491,7 +5491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2779505048971573876}
   m_Layer: 0
-  m_Name: Orbs
+  m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
