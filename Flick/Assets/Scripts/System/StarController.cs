@@ -59,12 +59,11 @@ public class StarController : MonoBehaviour
                 _OnHitForceField();
                 _rigidBody.linearVelocity = Vector2.zero;
 
-                // Use GetContacts to get contact info since we don't have collision info in OnTriggerEnter
+                // Spawn the effect at the midpoint between the force field's center and the ball's center since we don't have collision info in OnTriggerEnter
                 Vector3 forceFieldCenter = collision.transform.position;
                 Vector3 ballCenter = _transform.position;
                 Vector3 midPoint = (forceFieldCenter + ballCenter) / 2;
                 float angle = Mathf.Atan2(forceFieldCenter.y - ballCenter.y, forceFieldCenter.x - ballCenter.x) * Mathf.Rad2Deg - 90f;
-                DebugLogger.Log("Angle = " + angle);
                 GameObject.Instantiate(_forceFieldCollideEffectPrefab, midPoint, Quaternion.Euler(0f, 0f, angle));
 
                 _rippleEffect.transform.position = _transform.position;
