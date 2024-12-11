@@ -6005,7 +6005,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_HighlightedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.56265944, b: 0.8584906, a: 1}
+    m_PressedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_SelectedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -11407,7 +11407,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_HighlightedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.56265944, b: 0.8584906, a: 1}
+    m_PressedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_SelectedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -11623,7 +11623,7 @@ MonoBehaviour:
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 0
   FrequencyGain: 1
-  m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  m_NoiseOffsets: {x: -619.05334, y: -405.6321, z: 880.281}
 --- !u!114 &1351000586503771243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11751,6 +11751,7 @@ GameObject:
   - component: {fileID: 7692204815251322685}
   - component: {fileID: 5462453341099046921}
   - component: {fileID: 4462483695669577368}
+  - component: {fileID: 3002511639037591698}
   - component: {fileID: 3129765128221410827}
   m_Layer: 5
   m_Name: RetryButton
@@ -11840,7 +11841,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_HighlightedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.56265944, b: 0.8584906, a: 1}
+    m_PressedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_SelectedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -11873,6 +11874,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &3002511639037591698
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627272274296453514}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 46f05d8d970c17c4b9337419443ffd8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3129765128221410827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12841,6 +12864,7 @@ GameObject:
   - component: {fileID: 6231893329777050849}
   - component: {fileID: 8588719550665737169}
   - component: {fileID: 1379980703059159146}
+  - component: {fileID: 3417279189609514540}
   - component: {fileID: 1726384913445211972}
   m_Layer: 5
   m_Name: NextLevelButton
@@ -12930,7 +12954,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_HighlightedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.56265944, b: 0.8584906, a: 1}
+    m_PressedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_SelectedColor: {r: 0.4198113, g: 0.79834133, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -12963,6 +12987,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &3417279189609514540
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679998825357878855}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 46f05d8d970c17c4b9337419443ffd8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1726384913445211972
 MonoBehaviour:
   m_ObjectHideFlags: 0
