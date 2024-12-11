@@ -78,15 +78,6 @@ public class GameManager : MonoBehaviour
         _hitsRemainingText.SetText(_levelData.numberOfHitsAllowed.ToString());
     }
 
-    private IEnumerator Start()
-    {
-        yield return new WaitForEndOfFrame();
-
-        // Create collidable borders along each edge of the camera using an edge collider
-        // Need to call after WaitForEndOfFrame because Pixel Perfect Camera changes the viewport in LateUpdate
-        CreateCameraBorderColliders();
-    }
-
     private void Update()
     {
         _inputManager.ProcessInput();
@@ -105,20 +96,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         IsQuitting = true;
-    }
-
-    private void CreateCameraBorderColliders()
-    {
-        Vector2 bottomLeft = _camera.ViewportToWorldPoint(new Vector3(0, 0, _camera.nearClipPlane));
-        Vector2 topLeft = _camera.ViewportToWorldPoint(new Vector3(0, 1, _camera.nearClipPlane));
-        Vector2 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, _camera.nearClipPlane));
-        Vector2 bottomRight = _camera.ViewportToWorldPoint(new Vector3(1, 0, _camera.nearClipPlane));
-
-        Vector2[] edgeColliderPoints = new[] { bottomLeft, topLeft, topRight, bottomRight, bottomLeft };
-        List<Vector2> pointList = new List<Vector2>(edgeColliderPoints);
-        EdgeCollider2D edgeCollider = _camera.gameObject.GetComponent<EdgeCollider2D>();
-        edgeCollider.SetPoints(pointList);
-        edgeCollider.enabled = true;
     }
 
     private void CheckIfGameHasEnded(bool isGameOver, GameEndResult gameEndResult)
