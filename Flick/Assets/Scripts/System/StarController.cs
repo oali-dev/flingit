@@ -82,6 +82,16 @@ public class StarController : MonoBehaviour
         collision.gameObject.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        // When we quit the game unity tries to access CoroutineManager when it is already destroyed for some reason
+        // Hence we check if the game is not quitting before running the original code here
+        if(ResetChildPositionCoroutine != null && !GameManager.IsQuitting)
+        {
+            CoroutineManager.Instance.StopCoroutine(ResetChildPositionCoroutine);
+        }
+    }
+
     public void LaunchStar(Vector2 direction)
     {
         direction.Normalize();

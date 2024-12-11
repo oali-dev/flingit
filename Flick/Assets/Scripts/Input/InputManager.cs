@@ -29,19 +29,42 @@ public class InputManager
     private TouchProcessor _touchProcessor = null;
     private StarController _starController = null;
     private Camera _camera = null;
+    private GameObject _pauseMenu = null;
+    private bool _isGamePaused;
 
     private readonly int _tappableLayerMask = LayerMask.GetMask("Tappable");
 
-    public InputManager(StarController starController, Camera camera)
+    public InputManager(StarController starController, Camera camera, GameObject pauseMenu, ButtonController pauseMenuMainMenuButtonController, ButtonController pauseMenuRetryButtonController)
     {
         _touchProcessor = new IdleTouchProcessor(starController);
         _starController = starController;
         _camera = camera;
+        _pauseMenu = pauseMenu;
+        _isGamePaused = false;
+        pauseMenuMainMenuButtonController._onButtonPress += () => { Time.timeScale = 1.0f; };
+        pauseMenuRetryButtonController._onButtonPress += () => { Time.timeScale = 1.0f; };
     }
 
     public void ProcessInput()
     {
-        TouchInfo touchInfo = GetTouch();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(_isGamePaused)
+            {
+                UnpauseGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
+        if(_isGamePaused)
+        {
+            return;
+        }
+
+        TouchInfo touchInfo = GetTouchInfo();
         if(_touchProcessor.HasEnded(touchInfo))
         {
             _touchProcessor = _touchProcessor.End(touchInfo);
@@ -53,45 +76,7 @@ public class InputManager
         }
     }
 
-    private TouchInfo GetTouch()
-    {
-#if UNITY_MOBILE
-        return GetMobileTouchInfo();
-#elif UNITY_WEBGL || UNITY_EDITOR
-        return GetDesktopTouchInfo();
-#endif
-    }
-
-#if UNITY_MOBILE
-    private TouchInfo GetMobileTouchInfo()
-    {
-        if(Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            TouchPhase phase = touch.phase;
-            // TODO: Why is this not using mouse position from touch? Don't think this code works also touch position never declared anywhere
-            Vector2 worldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-
-            if(phase == TouchPhase.Began)
-            {
-                return new TouchInfo(touchPosition, TouchState.START, DetectCollider(mousePosition));
-            }   
-            else if(phase == TouchPhase.Moved || phase == TouchPhase.Stationary)
-            {
-                return new TouchInfo(touchPosition, TouchState.DRAG);
-            }
-            else if(phase == TouchPhase.Ended || phase == TouchPhase.Canceled)
-            {
-                return new TouchInfo(touchPosition, TouchState.RELEASE, DetectCollider(mousePosition));
-            }
-        }
-
-        return new TouchInfo(Vector2.zero, TouchState.IDLE);
-    }
-#endif
-
-#if UNITY_WEBGL || UNITY_EDITOR
-    private TouchInfo GetDesktopTouchInfo()
+    private TouchInfo GetTouchInfo()
     {
         Vector2 worldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -110,10 +95,23 @@ public class InputManager
 
         return new TouchInfo(worldPosition, TouchState.IDLE);
     }
-#endif
 
     private Collider2D DetectCollider(Vector2 worldPosition)
     {
         return Physics2D.OverlapPoint(worldPosition, _tappableLayerMask);
+    }
+
+    private void PauseGame()
+    {
+        _isGamePaused = true;
+        Time.timeScale = 0f;
+        _pauseMenu.SetActive(true);
+    }
+
+    private void UnpauseGame()
+    {
+        _isGamePaused = false;
+        Time.timeScale = 1.0f;
+        _pauseMenu.SetActive(false);
     }
 }
