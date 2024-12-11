@@ -23,9 +23,18 @@ public class GameManager : MonoBehaviour
     private GameObject _ballDestroyEffectPrefab;
     [SerializeField]
     private GameObject _fireworksEffectPrefab;
+    [SerializeField]
+    private GameObject _pauseMenu;
+    [SerializeField]
+    private ButtonController _pauseMenuMainMenuButtonController;
+    [SerializeField]
+    private ButtonController _pauseMenuRetryButtonController;
+
+    public static bool IsQuitting = false;
 
     private InputManager _inputManager = null;
     private LevelInstance _levelInstance = null;
+    private Coroutine GameWonSequenceCoroutine = null;
 
     private const float TimeBetweenEachFirework = 0.4f;
 
@@ -37,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = new InputManager(_starController, _camera);
+        _inputManager = new InputManager(_starController, _camera, _pauseMenu, _pauseMenuMainMenuButtonController, _pauseMenuRetryButtonController);
         _levelInstance = new LevelInstance(_levelData);
 
         _starController.HookUpCollisionCallbacks(
@@ -67,8 +76,6 @@ public class GameManager : MonoBehaviour
         _starController._numberOfForceFieldsAllowed = _levelData.numberOfForceFieldsAllowed;
 
         _hitsRemainingText.SetText(_levelData.numberOfHitsAllowed.ToString());
-        _retryButton.SetCurrentLevel(_levelData.level);
-        _nextLevelButton.SetCurrentLevel(_levelData.level);
     }
 
     private IEnumerator Start()
@@ -83,6 +90,21 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         _inputManager.ProcessInput();
+    }
+
+    private void OnDestroy()
+    {
+        // When we quit the game unity tries to access CoroutineManager when it is already destroyed for some reason
+        // Hence we check if the game is not quitting before running the original code here
+        if(GameWonSequenceCoroutine != null && !IsQuitting)
+        {
+            CoroutineManager.Instance.StopCoroutine(GameWonSequenceCoroutine);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        IsQuitting = true;
     }
 
     private void CreateCameraBorderColliders()
@@ -106,7 +128,7 @@ public class GameManager : MonoBehaviour
 
             if(gameEndResult == GameEndResult.WON)
             {
-                CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
+                GameWonSequenceCoroutine = CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
             }
             else
             {
