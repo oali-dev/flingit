@@ -31,10 +31,12 @@ public class InputManager
     private Camera _camera = null;
     private GameObject _pauseMenu = null;
     private bool _isGamePaused;
+    private ButtonController _tutorialCloseButton = null;
+    private bool _isTutorialShowing;
 
     private readonly int _tappableLayerMask = LayerMask.GetMask("Tappable");
 
-    public InputManager(StarController starController, Camera camera, GameObject pauseMenu, ButtonController pauseMenuMainMenuButtonController, ButtonController pauseMenuRetryButtonController)
+    public InputManager(StarController starController, Camera camera, GameObject pauseMenu, ButtonController pauseMenuMainMenuButtonController, ButtonController pauseMenuRetryButtonController, ButtonController tutorialCloseButton)
     {
         _touchProcessor = new IdleTouchProcessor(starController);
         _starController = starController;
@@ -43,6 +45,15 @@ public class InputManager
         _isGamePaused = false;
         pauseMenuMainMenuButtonController._onButtonPress += () => { Time.timeScale = 1.0f; };
         pauseMenuRetryButtonController._onButtonPress += () => { Time.timeScale = 1.0f; };
+        if(tutorialCloseButton != null)
+        {
+            _isTutorialShowing = true;
+            tutorialCloseButton._onButtonPress += () => { _isTutorialShowing = false; };
+        }
+        else
+        {
+            _isTutorialShowing = false;
+        }
     }
 
     public void ProcessInput()
@@ -60,6 +71,11 @@ public class InputManager
         }
 
         if(_isGamePaused)
+        {
+            return;
+        }
+
+        if(_isTutorialShowing)
         {
             return;
         }
