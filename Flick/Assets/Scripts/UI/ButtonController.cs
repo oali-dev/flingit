@@ -43,6 +43,15 @@ public class ButtonController : MonoBehaviour
         SceneManager.LoadScene("Level" + (_currentLevel + 1));
     }
 
+    public void CloseWindow(GameObject windowRoot)
+    {
+        if(_onButtonPress != null)
+        {
+            _onButtonPress();
+        }
+        windowRoot.SetActive(false);
+    }
+
     // Parse the number at the end of the scene name to get the current level
     private void ParseSceneName()
     {

@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     private ButtonController _pauseMenuMainMenuButtonController;
     [SerializeField]
     private ButtonController _pauseMenuRetryButtonController;
+    [SerializeField]
+    private ButtonController _tutorialCloseButton;
 
     public static bool IsQuitting = false;
 
@@ -46,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = new InputManager(_starController, _camera, _pauseMenu, _pauseMenuMainMenuButtonController, _pauseMenuRetryButtonController);
+        _inputManager = new InputManager(_starController, _camera, _pauseMenu, _pauseMenuMainMenuButtonController, _pauseMenuRetryButtonController, _tutorialCloseButton);
         _levelInstance = new LevelInstance(_levelData);
 
         _starController.HookUpCollisionCallbacks(
