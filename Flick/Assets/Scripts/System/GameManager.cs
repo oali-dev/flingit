@@ -30,7 +30,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ButtonController _pauseMenuRetryButtonController;
     [SerializeField]
-    private ButtonController _tutorialCloseButton;
+    private ButtonController _hintButtonController;
+    [SerializeField]
+    private TextMeshProUGUI _hintButtonText;
+    [SerializeField]
+    private GameObject _hints;
+    [SerializeField]
+    private ButtonController _tutorialCloseButtonController;
 
     public static bool IsQuitting = false;
 
@@ -48,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = new InputManager(_starController, _camera, _pauseMenu, _pauseMenuMainMenuButtonController, _pauseMenuRetryButtonController, _tutorialCloseButton);
+        _inputManager = new InputManager(_starController, _camera, _pauseMenu, _pauseMenuMainMenuButtonController, _pauseMenuRetryButtonController, _tutorialCloseButtonController);
         _levelInstance = new LevelInstance(_levelData);
 
         _starController.HookUpCollisionCallbacks(
@@ -76,8 +82,19 @@ public class GameManager : MonoBehaviour
             }
         );
         _starController._numberOfForceFieldsAllowed = _levelData.numberOfForceFieldsAllowed;
-
         _hitsRemainingText.SetText(_levelData.numberOfHitsAllowed.ToString());
+
+        // Read from player prefs to see if we turn on hints and set up the button that turns hints on and off
+        bool areHintsTurnedOn = (PlayerPrefs.GetInt("HintsOn", 0)) == 0 ? false : true;
+        ToggleHints(areHintsTurnedOn);
+        _hintButtonController._onButtonPress += () => {
+            bool areHintsTurnedOn = (PlayerPrefs.GetInt("HintsOn", 0)) == 0 ? false : true;
+
+            // If hints were on before pressing the button they are off after pressing it, and vice-versa
+            ToggleHints(!areHintsTurnedOn);
+            int hintsOnPlayerPrefs = areHintsTurnedOn ? 0 : 1;
+            PlayerPrefs.SetInt("HintsOn", hintsOnPlayerPrefs);
+        };
     }
 
     private void Update()
@@ -113,6 +130,20 @@ public class GameManager : MonoBehaviour
             {
                 _retryButton.gameObject.SetActive(true);
             }
+        }
+    }
+
+    private void ToggleHints(bool areHintsTurnedOn)
+    {
+        if(areHintsTurnedOn)
+        {
+            _hints.SetActive(true);
+            _hintButtonText.SetText("HINTS: ON");
+        }
+        else
+        {
+            _hints.SetActive(false);
+            _hintButtonText.SetText("HINTS: OFF");
         }
     }
 

@@ -52,6 +52,14 @@ public class ButtonController : MonoBehaviour
         windowRoot.SetActive(false);
     }
 
+    public void PressButton()
+    {
+        if(_onButtonPress != null)
+        {
+            _onButtonPress();
+        }
+    }
+
     // Parse the number at the end of the scene name to get the current level
     private void ParseSceneName()
     {
