@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     private InputManager _inputManager = null;
     private LevelInstance _levelInstance = null;
     private Coroutine GameWonSequenceCoroutine = null;
+    private bool _hasGameEndedAlready = false;
 
     private const float TimeBetweenEachFirework = 0.4f;
 
@@ -121,7 +122,8 @@ public class GameManager : MonoBehaviour
 
     private void CheckIfGameHasEnded(bool isGameOver, GameEndResult gameEndResult)
     {
-        if(isGameOver) {
+        if(isGameOver && !_hasGameEndedAlready) {
+            _hasGameEndedAlready = true;
             _starController.DestroyStar();
 
             if(gameEndResult == GameEndResult.WON)
@@ -140,6 +142,10 @@ public class GameManager : MonoBehaviour
             {
                 _retryButton.gameObject.SetActive(true);
             }
+        }
+        else
+        {
+            DebugLogger.Log("-------------------GAME HAS ENDED ALREADY-------------------");
         }
     }
 
