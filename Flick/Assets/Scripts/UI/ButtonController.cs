@@ -34,6 +34,15 @@ public class ButtonController : MonoBehaviour
         SceneManager.LoadScene("Level" + _currentLevel);
     }
 
+    public void LoadLevel(int level)
+    {
+        if(_onButtonPress != null)
+        {
+            _onButtonPress();
+        }
+        SceneManager.LoadScene("Level" + level);
+    }
+
     public void LoadNextLevel()
     {
         if(_onButtonPress != null)
@@ -50,6 +59,22 @@ public class ButtonController : MonoBehaviour
             _onButtonPress();
         }
         windowRoot.SetActive(false);
+    }
+
+    public void ToggleWindow(GameObject windowRoot)
+    {
+        if(_onButtonPress != null)
+        {
+            _onButtonPress();
+        }
+        if(windowRoot.activeSelf)
+        {
+            windowRoot.SetActive(false);
+        }
+        else
+        {
+            windowRoot.SetActive(true);
+        }
     }
 
     public void PressButton()
