@@ -59,18 +59,22 @@ public class DragTouchProcessor : TouchProcessor
 
     public override bool HasEnded(InputManager.TouchInfo touchInfo)
     {
-        return (touchInfo.touchState == InputManager.TouchState.RELEASE);
+        return _wasPaused || (touchInfo.touchState == InputManager.TouchState.RELEASE);
     }
 
     public override TouchProcessor End(InputManager.TouchInfo touchInfo)
     {
-        float dragDistance = GetDragDistance(touchInfo);
-        if(dragDistance > DragDistanceToShowTrajectory)
+        _starController.HideTrajectoryPreviewLine();
+        if(!_wasPaused)
         {
-            Vector2 launchDirection = GetLaunchDirection(touchInfo);
-            _starController.LaunchStar(launchDirection);
-            _starController.HideTrajectoryPreviewLine();
-            return new NullTouchProcessor(_starController);
+
+            float dragDistance = GetDragDistance(touchInfo);
+            if(dragDistance > DragDistanceToShowTrajectory)
+            {
+                Vector2 launchDirection = GetLaunchDirection(touchInfo);
+                _starController.LaunchStar(launchDirection);
+                return new NullTouchProcessor(_starController);
+            }
         }
 
         return new IdleTouchProcessor(_starController);

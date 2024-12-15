@@ -13,12 +13,15 @@ public class TapTouchProcessor : TouchProcessor
 
     public override bool HasEnded(InputManager.TouchInfo touchInfo)
     {
-        return (touchInfo.touchState == InputManager.TouchState.RELEASE);
+        return _wasPaused || (touchInfo.touchState == InputManager.TouchState.RELEASE);
     }
 
     public override TouchProcessor End(InputManager.TouchInfo touchInfo)
     {
-        _starController.PlaceForceField(touchInfo.worldPosition);
+        if(!_wasPaused)
+        {
+            _starController.PlaceForceField(touchInfo.worldPosition);
+        }
         return new IdleTouchProcessor(_starController);
     }
 }
