@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     private GameObject _hints;
     [SerializeField]
     private ButtonController _tutorialCloseButtonController;
+    [SerializeField]
+    private GameObject _congratulationsAnimationObject;
 
     public static bool IsQuitting = false;
 
@@ -125,7 +127,14 @@ public class GameManager : MonoBehaviour
             if(gameEndResult == GameEndResult.WON)
             {
                 PlayerPrefs.SetInt("HighestLevelUnlocked", _levelData.level + 1);
-                GameWonSequenceCoroutine = CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
+                if(_levelData.level == 20)
+                {
+                    GameWonSequenceCoroutine = CoroutineManager.Instance.StartCoroutine(PlayLastLevelGameWonSequence());
+                }
+                else
+                {
+                    GameWonSequenceCoroutine = CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
+                }
             }
             else
             {
@@ -150,11 +159,31 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PlayGameWonSequence()
     {
-        // Yield for tempo reasons
+        // Yield just a little bit for tempo
         yield return new WaitForSeconds(TimeBetweenEachFirework);
 
         // Play Fireworks at 5 random spots on the screen
         for(int i = 0; i < 5; i++)
+        {
+            float x = Random.Range(0.2f, 0.8f);
+            float y = Random.Range(0.2f, 0.8f);
+            Vector3 worldPoint = _camera.ViewportToWorldPoint(new Vector3(x, y, _camera.nearClipPlane));
+            GameObject.Instantiate(_fireworksEffectPrefab, worldPoint, Quaternion.identity);
+            yield return new WaitForSeconds(TimeBetweenEachFirework);
+        }
+
+        _nextLevelButton.gameObject.SetActive(true);
+    }
+
+    private IEnumerator PlayLastLevelGameWonSequence()
+    {
+        // Yield just a little bit for tempo
+        yield return new WaitForSeconds(TimeBetweenEachFirework);
+
+        _congratulationsAnimationObject.SetActive(true);
+
+        // Play Fireworks at 5 random spots on the screen
+        for(int i = 0; i < 14; i++)
         {
             float x = Random.Range(0.2f, 0.8f);
             float y = Random.Range(0.2f, 0.8f);
