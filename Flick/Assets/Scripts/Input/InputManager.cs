@@ -65,7 +65,10 @@ public class InputManager
             }
             else
             {
+                // PauseGame() essentially raises a dirty flag that is used by touch processors to skip directly to End() after unpausing the game
+                // This is to reset certain touch processors (i.e. drag, tap) if we pause while in the middle of them
                 PauseGame();
+                _touchProcessor.Pause();
             }
         }
 
