@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
 
             if(gameEndResult == GameEndResult.WON)
             {
+                PlayerPrefs.SetInt("HighestLevelUnlocked", _levelData.level + 1);
                 GameWonSequenceCoroutine = CoroutineManager.Instance.StartCoroutine(PlayGameWonSequence());
             }
             else
