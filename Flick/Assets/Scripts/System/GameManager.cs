@@ -62,17 +62,26 @@ public class GameManager : MonoBehaviour
 
         _starController.HookUpCollisionCallbacks(
             () => {
+                // It's possible for both wall collisions and point pickups to happen at the same time (i.e. the same frame)
+                // Hence we need to check if the game is already over before proceeding with the game over logic
+                if(_hasGameEndedAlready)
+                {
+                    return;
+                }
+
                 bool isGameLost =_levelInstance.DecrementHitsAllowed();
 
                 // Shake the camera whenever the ball collides with the wall
                 // If the collision caused the level to fail then play an even stronger camera shake
                 if(isGameLost)
                 {
+                    SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.DIED);
                     _cameraShakeScript.ShakeCamera(CameraShake.ShakeStrength.STRONG);
                     GameObject.Instantiate(_ballDestroyEffectPrefab, _starController.transform.position, Quaternion.identity);
                 }
                 else
                 {
+                    SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.HIT_WALL);
                     _cameraShakeScript.ShakeCamera(CameraShake.ShakeStrength.WEAK);
                 }
 
@@ -80,6 +89,14 @@ public class GameManager : MonoBehaviour
                 CheckIfGameHasEnded(isGameLost, GameEndResult.LOST);
             }, 
             () => {
+                // It's possible for both wall collisions and point pickups to happen at the same time (i.e. the same frame)
+                // Hence we need to check if the game is already over before proceeding with the game over logic
+                if(_hasGameEndedAlready)
+                {
+                    return;
+                }
+
+                SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.COLLECTED_POINT);
                 bool isGameWon =_levelInstance.DecrementOrbsRequired();
                 CheckIfGameHasEnded(isGameWon, GameEndResult.WON);
             }
@@ -122,7 +139,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckIfGameHasEnded(bool isGameOver, GameEndResult gameEndResult)
     {
-        if(isGameOver && !_hasGameEndedAlready) {
+        if(isGameOver) {
             _hasGameEndedAlready = true;
             _starController.DestroyStar();
 
@@ -142,10 +159,6 @@ public class GameManager : MonoBehaviour
             {
                 _retryButton.gameObject.SetActive(true);
             }
-        }
-        else
-        {
-            DebugLogger.Log("-------------------GAME HAS ENDED ALREADY-------------------");
         }
     }
 
@@ -167,6 +180,7 @@ public class GameManager : MonoBehaviour
     {
         // Yield just a little bit for tempo
         yield return new WaitForSeconds(TimeBetweenEachFirework);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.BEAT_LEVEL);
 
         // Play Fireworks at 5 random spots on the screen
         for(int i = 0; i < 5; i++)
@@ -186,6 +200,7 @@ public class GameManager : MonoBehaviour
         // Yield just a little bit for tempo
         yield return new WaitForSeconds(TimeBetweenEachFirework);
 
+        SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.BEAT_LEVEL);
         _congratulationsAnimationObject.SetActive(true);
 
         // Play Fireworks at 5 random spots on the screen
