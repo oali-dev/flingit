@@ -57,7 +57,7 @@ public class InputManager
 
     public void ProcessInput()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonUp(1))
         {
             if(_isGamePaused)
             {

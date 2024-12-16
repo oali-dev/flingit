@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 55713727}
   - component: {fileID: 55713728}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6050,8 +6050,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'DURING LEVELS PRESS ESC TO BRING UP THE PAUSE MENU WHERE YOU CAN GO BACK
-    TO THE MAIN MENU, RETRY THE LEVEL, OR TURN ON HINTS
+  m_text: 'PRESSING ESC OR RIGHT CLICKING WHEN IN A LEVEL BRINGS UP THE PAUSE MENU,
+    ALLOWING YOU TO RETRY THE LEVEL OR TURN ON HINTS
 
 '
   m_isRightToLeft: 0
@@ -8686,7 +8686,7 @@ GameObject:
   - component: {fileID: 1767391499}
   - component: {fileID: 1767391500}
   - component: {fileID: 1767391498}
-  - component: {fileID: 1767391497}
+  - component: {fileID: 1767391503}
   - component: {fileID: 1767391501}
   - component: {fileID: 1767391502}
   m_Layer: 0
@@ -8696,14 +8696,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1767391497
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767391496}
-  m_Enabled: 1
 --- !u!20 &1767391498
 Camera:
   m_ObjectHideFlags: 0
@@ -8848,6 +8840,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 1767391498}
   _edgeCollider: {fileID: 1767391501}
+--- !u!81 &1767391503
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767391496}
+  m_Enabled: 1
 --- !u!1 &1783511978
 GameObject:
   m_ObjectHideFlags: 0

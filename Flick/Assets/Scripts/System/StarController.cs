@@ -65,6 +65,7 @@ public class StarController : MonoBehaviour
                 Vector3 midPoint = (forceFieldCenter + ballCenter) / 2;
                 float angle = Mathf.Atan2(forceFieldCenter.y - ballCenter.y, forceFieldCenter.x - ballCenter.x) * Mathf.Rad2Deg - 90f;
                 GameObject.Instantiate(_forceFieldCollideEffectPrefab, midPoint, Quaternion.Euler(0f, 0f, angle));
+                SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.HIT_FORCE_FIELD);
 
                 _rippleEffect.transform.position = _transform.position;
                 _rippleEffect.SetActive(true);
@@ -98,6 +99,7 @@ public class StarController : MonoBehaviour
         _animator.SetBool(IsReleased, true);
         _rippleEffect.SetActive(false);
         _trailRenderer.SetActive(true);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.SoundType.LAUNCH_BALL);
         StartReturningChildToOrigin();
     }
 
