@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level_18_Data
   m_EditorClassIdentifier: 
   level: 18
-  numberOfHitsAllowed: 7
+  numberOfHitsAllowed: 4
   orbsRequiredToPassLevel: 4
   numberOfForceFieldsAllowed: 1
